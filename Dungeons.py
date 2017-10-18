@@ -3,6 +3,7 @@ Health = 10
 Money = 0
 EnemyHealth = 0
 AttackDamage = 1
+EnemyDamage = 1
 
 FOREST = "forest"
 LAKE = "lake"
@@ -15,8 +16,19 @@ EAST = "east"
 WEST = "west"
 
 currentRoom = TOWN
+#Classes
+#Creates a class called Enemy, We can use this a blueprint to create muliple enemies for our game
+class enemy:
+    #We are Initalizing our class saying it must have attackdamage and health when created
+   def __init__(self,name,attackDamage,health):
+       #Sets currently being created instance of the object cfrom the classes attackdamage and health
+        self.name = name
+        self.attackDamage = attackDamage
+        self.health = health
+    
 
-# Store Function
+#Functions
+#Store Function
 def store():
     #gobal makes our variables used inside this function the affect the variables with the same name outside the function
     global Health
@@ -58,9 +70,22 @@ def store():
         print("Choose a vaild answer \n")
         store()
     
+def dealth():
+    global AttackDamage
+    global Money
+    global Health
+    global currentRoom
+    Money = 0
+    Health = 1
+    AttackDamage = 1
+    currentRoom = TOWN
+    print(" \n You've Been knocked out and all your equipment has been stolen! Fear not! a noble soul has returned you to the town.")
+    main()
+
 #The function that manages the user attacking an enemy
 def attack():
     global EnemyHealth
+    global EnemyDamage
     global AttackDamage
     global Money
     global Health
@@ -78,7 +103,10 @@ def attack():
     else:
         print("You've been hit!")
         #The enemy attacks and takes one health away from the user
-        Health = Health - 1
+        Health = Health - EnemyDamage
+        if Health <= 0:
+            dealth()
+        
         print("You have " + str(Health) + " health")
         #The user returns to the enocounter to decide their next combat option
         encounter()
@@ -106,12 +134,16 @@ def encounter():
         print("Choose a vaild answer \n")
         encounter()
     
-def goblin():
+def EnemySpawn(enemy):
     global EnemyHealth
-    EnemyHealth = 5
-    print("You see a goblin! You've been hit!")
+    global EnemyDamage
     global Health
-    Health = Health - 1
+    EnemyHealth = enemy.health
+    EnemyDamage = enemy.attackDamage
+    print("You see a "+enemy.name+"! You've been hit!")
+    Health = Health - EnemyDamage
+    if Health <= 0:
+            dealth()
     print("You have " + str(Health) + " health")
     encounter()
 
@@ -121,7 +153,8 @@ def forest():
     #Launches the goblin enemy encounter
     #Note that forest doesn't return the user to main() like the other location functions,
     #This is because the goblin encounter will get the user back to main once finished
-    goblin()
+    Goblin = enemy("Goblin",1,5)
+    EnemySpawn(Goblin)
 
 # This function is runs whenever the user enters the lake
 def lake():
@@ -153,7 +186,8 @@ def cave():
     print("syhdysss+     ``...-::///:/++/:")
     print("ssyyyshyo......------::::://+/:")
     print("ssysssyso++/////++++///////+++/")
-    main()
+    Troll = enemy("Troll",3,10)
+    EnemySpawn(Troll)
 
 # This function tells the user where they are and were they can go
 def look():
@@ -222,7 +256,7 @@ def choosepath():
 
 #This function manages our game and is called main because it's where the user will spend the most time
 #It is the backbone of our game       
-def main():
+def main():   
     global Health
     global Money
     global currentRoom
