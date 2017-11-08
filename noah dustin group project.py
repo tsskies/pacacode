@@ -36,7 +36,7 @@ def store():
     global attackDamage
     #Health and Money are int's and need to be converted to print as a string
     print("you have "+ str(Health) +" health and "+ str(Money) +" money")
-    print("You're in a store. You see a wooden sword on the table with a 3 coin label")
+    print("You're in a store. You see a tazer on the table with a 3 coin label")
     print("What do you want to do? (buy, leave)")
     #Gets the input from the user
     direction = raw_input()
@@ -46,9 +46,9 @@ def store():
     if(direction == "BUY"):
         #Checks if the user has More than or equal the amount of money needed
         if Money >= 3:
-            #the variable attackDamaged is used when the user attacks an enemy. The default is 1, this is setting the users damage up to 2 because he/she has the sword now
+            #the variable attackDamaged is used when the user attacks an enemy. The default is 1, this is setting the users damage up to 2 because he/she has the tazer now
             attackDamage = 2
-            #Taking the money used to buy the sword away from the user
+            #Taking the money used to buy the tazer away from the user
             Money = Money - 3
             #Calls the main function so the user can continue the game
             main()
@@ -60,7 +60,7 @@ def store():
     elif(direction == "ROB"):
         #Like before the user has obtained the sword and has increased his/her damage. This time through steal so the user doesn't lose money
         AttackDamage = 2
-        print("You steal the sword and quickly fly out the door unnoticed!")
+        print("You steal the tazer and quickly fly out the door unnoticed!")
         main()
     #Takes the user out of the store and back to the main game  
     elif(direction == "LEAVE"):
@@ -150,11 +150,11 @@ def EnemySpawn(enemy):
 # This function is runs whenever the user enters the park
 def park():
     print("You are in the park")
-    #Launches the goblin enemy encounter
+    #Launches the snoopy enemy encounter
     #Note that park doesn't return the user to main() like the other location functions,
-    #This is because the goblin encounter will get the user back to main once finished
-    Goblin = enemy("Goblin",1,5)
-    EnemySpawn(Goblin)
+    #This is because the snopy encounter will get the user back to main once finished
+    Snoopy = enemy("snoopy",1,10)
+    EnemySpawn(Snoopy)
 
 # This function is runs whenever the user enters the hospital
 def hospital():
@@ -200,7 +200,7 @@ def look():
         print("You are next to a hospital. To your east you see a tunnel, to the south a city")
     elif(currentRoom == CITY):
         print("You are in a tunnel. To your west you see a hospital, to the south a park")
-    elif(currentRoom == FOREST):
+    elif(currentRoom == PARK):
         print("You are in the park. To your north you see a tunnel, to the west a city")
     main()
         

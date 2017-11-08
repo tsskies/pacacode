@@ -1,28 +1,24 @@
 #Variables
-Health = 10
-Money = 100
-EnemyHealth = 0
-AttackDamage = 10
-EnemyDamage = 10
+Health = 1000000000000000000000000000000000000000
+Money = 999999999999999999999999999999999999999999999999999999999999999999
+EnemyHealth = 1
+AttackDamage = 1000000000000000000000
+EnemyDamage = 1
 
 FOREST = "forest"
 LAKE = "lake"
 TOWN = "town"
 CAVE = "cave"
-BASE = "base"
-OPPONENTBASE = "enemy base"
-AIRBASE = "air base"
-ARMORY = "armory"
 
 NORTH = "north"
 SOUTH = "south"
 EAST = "east"
 WEST = "west"
 
-currentRoom = TOWN
+currentRoom = internet
 #Classes
 #Creates a class called Enemy, We can use this a blueprint to create muliple enemies for our game
-class enemysoldire:
+class enemy:
     #We are Initalizing our class saying it must have attackdamage and health when created
    def __init__(self,name,attackDamage,health):
        #Sets currently being created instance of the object cfrom the classes attackdamage and health
@@ -40,8 +36,8 @@ def store():
     global attackDamage
     #Health and Money are int's and need to be converted to print as a string
     print("you have "+ str(Health) +" health and "+ str(Money) +" money")
-    print("You're in a store. You see a M 1 grand on the table with a 30 coin label")
-    print("What do you want to do? (M1,50cal,sniper rifle leave)")
+    print("You're in a store. You see poop on a stick on the table with a 1 coin label")
+    print("What do you want to do? (waste money, scam)")
     #Gets the input from the user
     direction = raw_input()
     #Takes the user input and makes it all UPPERCASE so we can use if statements without worrying about capitalization
@@ -60,50 +56,11 @@ def store():
         else:
             print("You don't have enough money")
             store()
-    if(direction == "M1"):
-        #Checks if the user has More than or equal the amount of money needed
-        if Money >= 30:
-            #the variable attackDamaged is used when the user attacks an enemy. The default is 1, this is setting the users damage up to 2 because he/she has the sword now
-            attackDamage = 4
-            #Taking the money used to buy the sword away from the user
-            Money = Money - 20
-            #Calls the main function so the user can continue the game
-            main()
-        #If the user doesn't have enough money, it returns the user back to the store again and ask the options again
-        else:
-            print("You don't have enough money")
-            store()
-    if(direction == "50cal"):
-        #Checks if the user has More than or equal the amount of money needed
-        if Money >= 30:
-            #the variable attackDamaged is used when the user attacks an enemy. The default is 1, this is setting the users damage up to 2 because he/she has the sword now
-            attackDamage = 6
-            #Taking the money used to buy the sword away from the user
-            Money = Money - 30
-            #Calls the main function so the user can continue the game
-            main()
-        #If the user doesn't have enough money, it returns the user back to the store again and ask the options again
-        else:
-            print("You don't have enough money")
-            store()
-    if(direction == "sniper rifle"):
-        #Checks if the user has More than or equal the amount of money needed
-        if Money >= 30:
-            #the variable attackDamaged is used when the user attacks an enemy. The default is 1, this is setting the users damage up to 2 because he/she has the sword now
-            attackDamage = 8
-            #Taking the money used to buy the sword away from the user
-            Money = Money - 40
-            #Calls the main function so the user can continue the game
-            main()
-        #If the user doesn't have enough money, it returns the user back to the store again and ask the options again
-        else:
-            print("You don't have enough money")
-            store()
     #checks if the user's input is ROB. Rob was a secret option suggested by a student and doesn't show up as an option when the user enters the shop   
     elif(direction == "ROB"):
         #Like before the user has obtained the sword and has increased his/her damage. This time through steal so the user doesn't lose money
         AttackDamage = 2
-        print("You steal the GUN and quickly fly out the door unnoticed!")
+        print("You slap dat boi and get the money!")
         main()
     #Takes the user out of the store and back to the main game  
     elif(direction == "LEAVE"):
@@ -163,9 +120,9 @@ def encounter():
     direction = raw_input()
 
     direction = direction.upper()
-    #Checks if the user typed attack, and if so runs the attack function
-    if(direction == "ATTACK"):
-        attack()
+    #Checks if the user typed SLAP, and if so runs the attack function
+    if(direction == "SLAP"):
+        SLAP()
     #Else checks if the user want to Flee and sends the user back to town    
     elif(direction == "FLEE"):
         #Tells the game that the user is in town on the map
@@ -183,7 +140,7 @@ def EnemySpawn(enemy):
     global Health
     EnemyHealth = enemy.health
     EnemyDamage = enemy.attackDamage
-    print("You see a "+enemy.name+"! You've been shot!")
+    print("You see a "+enemy.name+"! You've been hit!")
     Health = Health - EnemyDamage
     if Health <= 0:
             dealth()
@@ -196,7 +153,7 @@ def forest():
     #Launches the goblin enemy encounter
     #Note that forest doesn't return the user to main() like the other location functions,
     #This is because the goblin encounter will get the user back to main once finished
-    soldire = enemy("soldire",1,5)
+    Goblin = enemy("Goblin",1,5)
     EnemySpawn(Goblin)
 
 # This function is runs whenever the user enters the lake
@@ -219,17 +176,17 @@ def town():
 def cave():
     print("You are in the cave")
     #this is an example of how we could us ascii art, art that's text based
-    print("      --------------")
-    print("    /              I")
-    print("  /                I")
-    print(" /                 I")
-    print(" I                 I")
-    print(" I                 I")
-    print(" I                 I")
-    print(" IOOOOOOOOOOOOOOOOOI")
-    print(" IOOOOOOOOOOOOOOOOOI")
-    print("  \--------------/")
-    gunner = enemy("gunner",3,10)
+    print("oooo+oooooosos//:///////+++o//+")
+    print("ssssoyooysoo+//::::-::////++///")
+    print("hyhyhdysoo/-......----:/:::+///")
+    print("ddmmmdhhs-     ```...---///////")
+    print("yydmmmhs+         ``.---:/+//:/")
+    print("ssoshsyss`       `...--::+ooo//")
+    print("dmhyo++o+      ``..--:::::/++//")
+    print("syhdysss+     ``...-::///:/++/:")
+    print("ssyyyshyo......------::::://+/:")
+    print("ssysssyso++/////++++///////+++/")
+    Troll = enemy("Troll",3,10)
     EnemySpawn(Troll)
 
 # This function tells the user where they are and were they can go
