@@ -1,24 +1,27 @@
 #Variables
 Health = 10
-Money = 100
+Money = 0
 EnemyHealth = 0
-AttackDamage = 10
-EnemyDamage = 10
+AttackDamage = 1
+EnemyDamage = 1
+ArmorHealth = 20
 
-OPPONENTBASE = "enemy base"
-LAKE = "lake"
-TOWN = "town"
-ARMORY = "armory"
-BASE = "base"
-AIRBASE = "air base"
-
+FOREST = "cave"
+LAKE = "inn"
+TOWN = "village"
+CAVE = "beach"
+MOUNTAIN = "mountain"
+PATH = "path"
+MCAVE = "mountaincave"
+POND = "pond"
+TRAIL = "trail"
 
 NORTH = "north"
 SOUTH = "south"
 EAST = "east"
 WEST = "west"
 
-currentRoom = TOWN
+currentRoom = FOREST
 #Classes
 #Creates a class called Enemy, We can use this a blueprint to create muliple enemies for our game
 class enemy:
@@ -36,11 +39,11 @@ def store():
     #gobal makes our variables used inside this function the affect the variables with the same name outside the function
     global Health
     global Money
-    global attackDamage
+    global AttackDamage
     #Health and Money are int's and need to be converted to print as a string
     print("you have "+ str(Health) +" health and "+ str(Money) +" money")
-    print("You're in a store. You see a M 1 grand on the table with a 30 coin label")
-    print("What do you want to do? (M1,50cal,sniper rifle leave)")
+    print("You're in a store. You see a wooden sword on the table with a 3 coin label you also see a sign that says Armor for sale 6 coins")
+    print("What do you want to do? (buy, leave)")
     #Gets the input from the user
     direction = raw_input()
     #Takes the user input and makes it all UPPERCASE so we can use if statements without worrying about capitalization
@@ -48,64 +51,31 @@ def store():
     #Checks if the user's input was BUY
     if(direction == "BUY"):
         #Checks if the user has More than or equal the amount of money needed
-        if Money >= 3:
+       print("What would you like the sword or the armor?")
+    direction = raw_input()
+
+    direction = direction.upper()
+
+    if(direction == "ARMOR"):
             #the variable attackDamaged is used when the user attacks an enemy. The default is 1, this is setting the users damage up to 2 because he/she has the sword now
-            attackDamage = 2
+            armorhealth = 40
             #Taking the money used to buy the sword away from the user
+            Money = Money - 6
+            #Calls the main function so the user can continue the game
+            main()
+
+    if(direction == "SWORD"):
             Money = Money - 3
-            #Calls the main function so the user can continue the game
-            main()
-        #If the user doesn't have enough money, it returns the user back to the store again and ask the options again
-        else:
-            print("You don't have enough money")
-            store()
-    if(direction == "M1"):
-        #Checks if the user has More than or equal the amount of money needed
-        if Money >= 30:
-            #the variable attackDamaged is used when the user attacks an enemy. The default is 1, this is setting the users damage up to 2 because he/she has the sword now
-            attackDamage = 4
-            #Taking the money used to buy the sword away from the user
-            Money = Money - 20
-            #Calls the main function so the user can continue the game
-            main()
-        #If the user doesn't have enough money, it returns the user back to the store again and ask the options again
-        else:
-            print("You don't have enough money")
-            store()
-    if(direction == "50cal"):
-        #Checks if the user has More than or equal the amount of money needed
-        if Money >= 30:
-            #the variable attackDamaged is used when the user attacks an enemy. The default is 1, this is setting the users damage up to 2 because he/she has the sword now
-            attackDamage = 6
-            #Taking the money used to buy the sword away from the user
-            Money = Money - 30
-            #Calls the main function so the user can continue the game
-            main()
-        #If the user doesn't have enough money, it returns the user back to the store again and ask the options again
-        else:
-            print("You don't have enough money")
-            store()
-    if(direction == "sniper rifle"):
-        #Checks if the user has More than or equal the amount of money needed
-        if Money >= 30:
-            #the variable attackDamaged is used when the user attacks an enemy. The default is 1, this is setting the users damage up to 2 because he/she has the sword now
-            attackDamage = 8
-            #Taking the money used to buy the sword away from the user
-            Money = Money - 40
-            #Calls the main function so the user can continue the game
-            main()
-        #If the user doesn't have enough money, it returns the user back to the store again and ask the options again
-        else:
-            print("You don't have enough money")
-            store()
+            Attackdamage = 3
     #checks if the user's input is ROB. Rob was a secret option suggested by a student and doesn't show up as an option when the user enters the shop   
-    elif(direction == "ROB"):
+
+    if(direction == "ROB"):
         #Like before the user has obtained the sword and has increased his/her damage. This time through steal so the user doesn't lose money
-        AttackDamage = 2
-        print("You steal the M1 Grand and quickly fly out the door unnoticed!")
+        AttackDamage = 5
+        print("You steal the armor and quickly fly out the door unnoticed!")
         main()
     #Takes the user out of the store and back to the main game  
-    elif(direction == "LEAVE"):
+    if(direction == "LEAVE"):
         main()
     #If the user doesn't input a vaild answer they are returned to the store to try again    
     else:
@@ -116,7 +86,7 @@ def dealth():
     global AttackDamage
     global Money
     global Health
-    global currentRoom
+    global CurrentRoom
     Money = 0
     Health = 1
     AttackDamage = 1
@@ -182,7 +152,7 @@ def EnemySpawn(enemy):
     global Health
     EnemyHealth = enemy.health
     EnemyDamage = enemy.attackDamage
-    print("You see a "+enemy.name+"! You've been shot!")
+    print("You see a "+enemy.name+"! You've been hit!")
     Health = Health - EnemyDamage
     if Health <= 0:
             dealth()
@@ -195,7 +165,7 @@ def forest():
     #Launches the goblin enemy encounter
     #Note that forest doesn't return the user to main() like the other location functions,
     #This is because the goblin encounter will get the user back to main once finished
-    soldire = enemy("soldire",1,5)
+    Goblin = enemy("Goblin",1,5)
     EnemySpawn(Goblin)
 
 # This function is runs whenever the user enters the lake
@@ -218,17 +188,17 @@ def town():
 def cave():
     print("You are in the cave")
     #this is an example of how we could us ascii art, art that's text based
-    print("      --------------")
-    print("    /              I")
-    print("  /                I")
-    print(" /                 I")
-    print(" I                 I")
-    print(" I                 I")
-    print(" I                 I")
-    print(" IOOOOOOOOOOOOOOOOOI")
-    print(" IOOOOOOOOOOOOOOOOOI")
-    print("  \--------------/")
-    gunner = enemy("gunner",3,10)
+    print("oooo+oooooosos//:///////+++o//+")
+    print("ssssoyooysoo+//::::-::////++///")
+    print("hyhyhdysoo/-......----:/:::+///")
+    print("ddmmmdhhs-     ```...---///////")
+    print("yydmmmhs+         ``.---:/+//:/")
+    print("ssoshsyss`       `...--::+ooo//")
+    print("dmhyo++o+      ``..--:::::/++//")
+    print("syhdysss+     ``...-::///:/++/:")
+    print("ssyyyshyo......------::::://+/:")
+    print("ssysssyso++/////++++///////+++/")
+    Troll = enemy("Troll",3,10)
     EnemySpawn(Troll)
 
 # This function tells the user where they are and were they can go
@@ -237,13 +207,15 @@ def look():
     #We're using here for readablity, so there isn't too much text on the screen at once
     print("\n")
     if(currentRoom == TOWN):
-        print("You are in a town. To your north you see a lake, to the east a forest")
+        print("You are in the village East to go to the trail... be careful!")
     elif(currentRoom == LAKE):
-        print("You are next to a lake. To your east you see a cave, to the south a town")
+        print("You are in the inn sleep here to heal but it costs gold, east is a water monster at the beach you must be strong")
     elif(currentRoom == CAVE):
-        print("You are in a cave. To your west you see a lake, to the south a forest")
+        print("Welcome to the beach this is where the water monster lives")
     elif(currentRoom == FOREST):
-        print("You are in the forest. To your north you see a cave, to the west a town")
+        print("You are in the cave this is where you woke up")
+    elif(currentRoom == PATH):
+        print("Welocme to the path west will bring you to the town")
     main()
         
 #This function manages user movement
@@ -263,22 +235,22 @@ def choosepath():
     # how to get to the lake
     # Checks if the location "currentRoom" is TOWN and if the direction the user wants to go is NORTH
     # If so it sets the current room to the LAKE
-    if(currentRoom == TOWN and direction == "NORTH"):
-        currentRoom = LAKE
-    elif(currentRoom == CAVE and direction == "WEST"):
-        currentRoom = LAKE
+    if(currentRoom == TOWN and direction == "EAST"):
+        currentRoom = PATH
+    elif(currentRoom == PATH and direction == "EAST"):
+        currentRoom = MOUNTAIN
 
     # how to get to the cave
-    elif(currentRoom == LAKE and direction == "EAST"):
-        currentRoom = CAVE
-    elif(currentRoom == FOREST and direction == "NORTH"):
-        currentRoom = CAVE
+    elif(currentRoom == MOUNTAIN and direction == "SOUTH"):
+        currentRoom = MCAVE
+    elif(currentRoom == MCAVE and direction == "SOUTH"):
+        currentRoom = POND
 
     # how to get to the forest
-    elif(currentRoom == CAVE and direction == "SOUTH"):
-        currentRoom = FOREST
-    elif(currentRoom == TOWN and direction == "EAST"):
-        currentRoom = FOREST
+    elif(currentRoom == POND and direction == "WEST"):
+        currentRoom = TRAIL
+    elif(currentRoom == TRAIL and direction == "WEST"):
+        currentRoom = TOWN
     
     # how to get to the cave
     elif(currentRoom == LAKE and direction == "SOUTH"):
@@ -294,7 +266,17 @@ def choosepath():
     elif(currentRoom == CAVE):
         cave()
     elif(currentRoom == FOREST):
-        forest()          
+        forest()
+      
+    if(currentRoom == PATH and direction == "WEST"):
+        currentRoom = TOWN
+    elif(currentRoom == TOWN and direction == "NORTH"):
+        currentRoom = FOREST
+
+    if(currentRoom == CAVE and direction == "WEST"):
+        currentRoom = LAKE
+    elif(currentRoom == TRAIL and direction == "EAST"):
+        currentRoom = POND
 
 #This function manages our game and is called main because it's where the user will spend the most time
 #It is the backbone of our game       

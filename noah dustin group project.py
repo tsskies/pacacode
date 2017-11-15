@@ -1,6 +1,6 @@
 #Variables
 Health = 10
-Money = 0
+Money = 999
 EnemyHealth = 0
 AttackDamage = 1
 EnemyDamage = 1
@@ -33,7 +33,7 @@ def store():
     #gobal makes our variables used inside this function the affect the variables with the same name outside the function
     global Health
     global Money
-    global attackDamage
+    global AttackDamage
     #Health and Money are int's and need to be converted to print as a string
     print("you have "+ str(Health) +" health and "+ str(Money) +" money")
     print("You're in a store. You see a tazer on the table with a 3 coin label")
@@ -47,7 +47,7 @@ def store():
         #Checks if the user has More than or equal the amount of money needed
         if Money >= 3:
             #the variable attackDamaged is used when the user attacks an enemy. The default is 1, this is setting the users damage up to 2 because he/she has the tazer now
-            attackDamage = 2
+            AttackDamage = 2
             #Taking the money used to buy the tazer away from the user
             Money = Money - 3
             #Calls the main function so the user can continue the game
@@ -153,7 +153,7 @@ def park():
     #Launches the snoopy enemy encounter
     #Note that park doesn't return the user to main() like the other location functions,
     #This is because the snopy encounter will get the user back to main once finished
-    Snoopy = enemy("snoopy",1,10)
+    Snoopy = enemy("snoopy",1,9)
     EnemySpawn(Snoopy)
 
 # This function is runs whenever the user enters the hospital
@@ -186,7 +186,7 @@ def tunnel():
     print("syhdysss+     ``...-::///:/++/:")
     print("ssyyyshyo......------::::://+/:")
     print("ssysssyso++/////++++///////+++/")
-    Snoopy = enemy("snoopy",3,10)
+    Snoopy = enemy("Trill",3,10)
     EnemySpawn(Snoopy)
 
 # This function tells the user where they are and were they can go
